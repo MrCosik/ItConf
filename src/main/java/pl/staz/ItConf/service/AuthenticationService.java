@@ -26,7 +26,7 @@ public class AuthenticationService {
         if (!userSession.isLoggedIn()) {
             if(potentialUser != null) {
                 if (potentialUser.getUsername().equals(userDto.getUsername()) && potentialUser.getEmail().equals(userDto.getEmail())) {
-                    userSession.logIn();
+                    userSession.logIn(potentialUser);
                     return true;
                 }
             }else{

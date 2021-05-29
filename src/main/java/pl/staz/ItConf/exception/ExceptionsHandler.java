@@ -12,4 +12,24 @@ public class ExceptionsHandler {
     public ResponseEntity<Object> handleAlreadyLoggedException(UserAlreadyExistsException e){
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(value = {UserNotLoggedException.class})
+    public ResponseEntity<Object> handleUserNotLoggedException(UserNotLoggedException e){
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = {UserAlreadyLoggedException.class})
+    public ResponseEntity<Object> handleUserAlreadyLoggedException(UserAlreadyLoggedException e){
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = {UserDoesntExistException.class})
+    public ResponseEntity<Object> handleUserDoesntExistException(UserDoesntExistException e){
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = {UserAlreadyAttendsThisLecture.class})
+    public ResponseEntity<Object> handleUserAlreadyAttendsThisLecture(UserAlreadyAttendsThisLecture e){
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
 }

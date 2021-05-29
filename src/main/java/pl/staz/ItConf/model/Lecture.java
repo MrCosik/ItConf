@@ -11,9 +11,9 @@ public class Lecture {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "lecture_id")
-    private Long lectureId;
+    private Long lectureNumber;
     @Column(name = "topic_number")
-    private int topicNumber;
+    private Long topicNumber;
     @Column(name = "app_user_id")
     private Long appUserId;
 
@@ -21,8 +21,7 @@ public class Lecture {
     public Lecture() {
     }
 
-    public Lecture(Long lectureId, int topicNumber, Long appUserId) {
-        this.lectureId = lectureId;
+    public Lecture(Long topicNumber, Long appUserId) {
         this.topicNumber = topicNumber;
         this.appUserId = appUserId;
     }
@@ -35,19 +34,19 @@ public class Lecture {
         this.id = id;
     }
 
-    public Long getLectureId() {
-        return lectureId;
+    public Long getLectureNumber() {
+        return lectureNumber;
     }
 
-    public void setLectureId(Long lectureId) {
-        this.lectureId = lectureId;
+    public void setLectureNumber(Long lectureId) {
+        this.lectureNumber = lectureId;
     }
 
-    public int getTopicNumber() {
+    public Long getTopicNumber() {
         return topicNumber;
     }
 
-    public void setTopicNumber(int topicNumber) {
+    public void setTopicNumber(Long topicNumber) {
         this.topicNumber = topicNumber;
     }
 

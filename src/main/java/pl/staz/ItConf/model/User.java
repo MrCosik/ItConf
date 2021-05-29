@@ -63,4 +63,10 @@ public class User {
     public void setAttendedLectures(Set<Lecture> attendedLectures) {
         this.attendedLectures = attendedLectures;
     }
+
+    public void addLecture(Lecture lecture){
+        attendedLectures.add(lecture);
+    }
+
+
 }
