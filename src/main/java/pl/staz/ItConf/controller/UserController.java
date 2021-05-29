@@ -6,9 +6,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException;
 import pl.staz.ItConf.exception.UserAlreadyExistsException;
 import pl.staz.ItConf.model.User;
 import pl.staz.ItConf.model.dto.UserDto;
+import pl.staz.ItConf.service.AuthenticationService;
 import pl.staz.ItConf.service.UserService;
 
 import java.net.http.HttpResponse;
@@ -16,9 +18,11 @@ import java.net.http.HttpResponse;
 @RestController
 public class UserController {
     UserService userService;
+    AuthenticationService authenticationService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, AuthenticationService authenticationService) {
         this.userService = userService;
+        this.authenticationService = authenticationService;
     }
 
     @PostMapping("/register")
@@ -32,8 +36,12 @@ public class UserController {
         return new ResponseEntity<>(UserDto.from(savedUser), HttpStatus.OK);
     }
 
-    @PostMapping
-    public ResponseEntity<HttpResponse> login(){
-        return null;
+    @PostMapping("/login")
+    public ResponseEntity<UserDto> login(@RequestBody UserDto userDto){
+        if(authenticationService.login(userDto))
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+
     }
 }
