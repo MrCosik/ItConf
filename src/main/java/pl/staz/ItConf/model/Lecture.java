@@ -8,7 +8,7 @@ public class Lecture {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "lecture_id")
     private Long lectureId;

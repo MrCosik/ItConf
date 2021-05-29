@@ -1,6 +1,6 @@
 -- DROP TABLE IF EXISTS  app_user;
 -- DROP TABLE IF EXISTS  lecture;
-
+CREATE SEQUENCE hibernate_sequence;
 CREATE TABLE app_user
 (
     id       IDENTITY NOT NULL PRIMARY KEY,

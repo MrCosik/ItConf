@@ -10,6 +10,7 @@ import java.util.UUID;
 public class User {
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "username")
     private String username;
