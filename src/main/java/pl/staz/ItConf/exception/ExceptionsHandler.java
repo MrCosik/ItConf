@@ -33,8 +33,14 @@ public class ExceptionsHandler {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(value = {UserAleadyAttendsException.class})
-    public ResponseEntity<Object> handleUserAleadyAttendsException(UserAleadyAttendsException e){
+    @ExceptionHandler(value = {UserAlreadyAttendsException.class})
+    public ResponseEntity<Object> handleUserAlreadyAttendsException(UserAlreadyAttendsException e){
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+
+    @ExceptionHandler(value = {NotEnoughSeatsException.class})
+    public ResponseEntity<Object> handleNotEnoughSeatsException(NotEnoughSeatsException e){
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }
