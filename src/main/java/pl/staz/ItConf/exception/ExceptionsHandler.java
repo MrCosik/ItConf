@@ -32,4 +32,9 @@ public class ExceptionsHandler {
     public ResponseEntity<Object> handleUserAlreadyAttendsThisLecture(UserAlreadyAttendsThisLecture e){
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(value = {UserAleadyAttendsException.class})
+    public ResponseEntity<Object> handleUserAleadyAttendsException(UserAleadyAttendsException e){
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
 }

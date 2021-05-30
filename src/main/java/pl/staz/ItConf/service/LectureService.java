@@ -2,6 +2,7 @@ package pl.staz.ItConf.service;
 
 import org.springframework.stereotype.Service;
 import pl.staz.ItConf.config.UserSession;
+import pl.staz.ItConf.exception.UserAleadyAttendsException;
 import pl.staz.ItConf.exception.UserAlreadyAttendsThisLecture;
 import pl.staz.ItConf.model.Lecture;
 import pl.staz.ItConf.model.TopicsLecture;
@@ -44,34 +45,50 @@ public class LectureService {
     public void signUpForLecture(Long topicId, Long lectureId) {
         User loggedUser = userRepository.findUserByUsername(userSession.getUsername());
         Lecture lectureToAdd = new Lecture();
+        System.out.println(loggedUser.getAttendedLectures());
+
+
 
         for (Lecture lecture : loggedUser.getAttendedLectures()) {
+            if(lecture.getLectureNumber().equals(lectureId))
+                throw new UserAleadyAttendsException("User already attends lecture at this time");
             if (lecture.getLectureNumber().equals(lectureId) && lecture.getTopicNumber().equals(topicId))
                 throw new UserAlreadyAttendsThisLecture("User already attends this lecture");
-
+        }
             switch (topicId.intValue()) {
                 case 1:
-                    TopicsLecture lecture1 = topic1.get(lectureId.intValue());
-
+                    TopicsLecture lecture1 = topic1.get(lectureId.intValue() - 1);
                     lectureToAdd.setLectureNumber(lecture1.getLectureNumber());
                     lectureToAdd.setTopicNumber(lecture1.getTopicId());
+                    lectureToAdd.setAppUserId(loggedUser.getId());
+                    lectureToAdd.setAttendees(lectureToAdd.getAttendees() + 1);
                     loggedUser.addLecture(lectureToAdd);
+                    userRepository.save(loggedUser);
+                    System.out.println(lectureToAdd.toString());
+                    System.out.println(loggedUser.getAttendedLectures());
                     break;
                 case 2:
                     TopicsLecture lecture2 = topic2.get(lectureId.intValue());
                     lectureToAdd.setLectureNumber(lecture2.getLectureNumber());
                     lectureToAdd.setTopicNumber(lecture2.getTopicId());
+                    lectureToAdd.setAppUserId(loggedUser.getId());
+                    lectureToAdd.setAttendees(lectureToAdd.getAttendees() + 1);
                     loggedUser.addLecture(lectureToAdd);
+                    userRepository.save(loggedUser);
                     break;
                 case 3:
                     TopicsLecture lecture3 = topic3.get(lectureId.intValue());
                     lectureToAdd.setLectureNumber(lecture3.getLectureNumber());
                     lectureToAdd.setTopicNumber(lecture3.getTopicId());
+                    lectureToAdd.setAppUserId(loggedUser.getId());
+                    lectureToAdd.setAttendees(lectureToAdd.getAttendees() + 1);
                     loggedUser.addLecture(lectureToAdd);
+                    userRepository.save(loggedUser);
                     break;
 
             }
 
-        }
     }
+
+
 }

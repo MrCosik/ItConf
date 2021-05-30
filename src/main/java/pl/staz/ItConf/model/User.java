@@ -21,6 +21,7 @@ public class User {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
+//    @JoinColumn(name = "id"?)
     Set<Lecture> attendedLectures = new HashSet<>();
 
 
@@ -64,7 +65,7 @@ public class User {
         this.attendedLectures = attendedLectures;
     }
 
-    public void addLecture(Lecture lecture){
+    public void addLecture(Lecture lecture) {
         attendedLectures.add(lecture);
     }
 

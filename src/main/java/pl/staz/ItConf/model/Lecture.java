@@ -16,6 +16,8 @@ public class Lecture {
     private Long topicNumber;
     @Column(name = "app_user_id")
     private Long appUserId;
+    @Column(name = "attendees")
+    private int attendees;
 
 
     public Lecture() {
@@ -56,5 +58,18 @@ public class Lecture {
 
     public void setAppUserId(Long appUserId) {
         this.appUserId = appUserId;
+    }
+
+    public int getAttendees() {
+        return attendees;
+    }
+
+    public void setAttendees(int attendees) {
+        this.attendees = attendees;
+    }
+
+    @Override
+    public String toString() {
+        return "Lecture: " + lectureNumber + " of topic nr: " + topicNumber;
     }
 }

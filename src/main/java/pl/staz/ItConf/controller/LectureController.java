@@ -30,7 +30,7 @@ public class LectureController {
     lectureService.signUpForLecture(topicId, lectureId);
 
 
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
 
