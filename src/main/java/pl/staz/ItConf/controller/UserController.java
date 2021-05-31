@@ -43,7 +43,6 @@ public class UserController {
     }
 
     @GetMapping("/signout")
-//    @RequestMapping(method = { RequestMethod.GET, RequestMethod.POST }, produces="application/json", name = "/signout")
     public void logout(){
         authenticationService.logout();
 //        return new ResponseEntity<>(HttpStatus.OK);

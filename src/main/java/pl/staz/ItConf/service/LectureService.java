@@ -25,7 +25,7 @@ public class LectureService {
     }
 
     List<TopicsLecture> topic1 = Arrays.asList(
-            new TopicsLecture(1L, 1L, 5),
+            new TopicsLecture(1L, 1L, 4),
             new TopicsLecture(1L, 2L, 0),
             new TopicsLecture(1L, 3L, 0)
     );
@@ -64,9 +64,11 @@ public class LectureService {
                     lectureToAdd.setLectureNumber(lecture1.getLectureNumber());
                     lectureToAdd.setTopicNumber(lecture1.getTopicId());
                     lectureToAdd.setAppUserId(loggedUser.getId());
-                    if(lecture1.getNumberOfAttendees() == 5)
+                    if(lecture1.getNumberOfAttendees() >= 5)
                         throw new NotEnoughSeatsException("Lecture is full");
                     lectureToAdd.setAttendees(lecture1.getNumberOfAttendees() + 1);
+                    lecture1.setNumberOfAttendees(lectureToAdd.getAttendees());
+                    System.out.println(lectureToAdd.getAttendees());
                     loggedUser.addLecture(lectureToAdd);
                     userRepository.save(loggedUser);
                     break;
@@ -75,9 +77,10 @@ public class LectureService {
                     lectureToAdd.setLectureNumber(lecture2.getLectureNumber());
                     lectureToAdd.setTopicNumber(lecture2.getTopicId());
                     lectureToAdd.setAppUserId(loggedUser.getId());
-                    if(lecture2.getNumberOfAttendees() == 5)
+                    if(lecture2.getNumberOfAttendees() >= 5)
                         throw new NotEnoughSeatsException("Lecture is full");
                     lectureToAdd.setAttendees(lecture2.getNumberOfAttendees() + 1);
+                    lecture2.setNumberOfAttendees(lectureToAdd.getAttendees());
                     loggedUser.addLecture(lectureToAdd);
                     userRepository.save(loggedUser);
                     break;
@@ -86,9 +89,10 @@ public class LectureService {
                     lectureToAdd.setLectureNumber(lecture3.getLectureNumber());
                     lectureToAdd.setTopicNumber(lecture3.getTopicId());
                     lectureToAdd.setAppUserId(loggedUser.getId());
-                    if(lecture3.getNumberOfAttendees() == 5)
+                    if(lecture3.getNumberOfAttendees() >= 5)
                         throw new NotEnoughSeatsException("Lecture is full");
                     lectureToAdd.setAttendees(lecture3.getNumberOfAttendees() + 1);
+                    lecture3.setNumberOfAttendees(lectureToAdd.getAttendees());
                     loggedUser.addLecture(lectureToAdd);
                     userRepository.save(loggedUser);
                     break;
