@@ -10,14 +10,14 @@ public class Lecture {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "lecture_id")
+    @Column(name = "lecture_number")
     private Long lectureNumber;
     @Column(name = "topic_number")
     private Long topicNumber;
     @Column(name = "app_user_id")
     private Long appUserId;
     @Column(name = "attendees")
-    private int attendees;
+    private int numberOfAttendees;
 
 
     public Lecture() {
@@ -60,12 +60,12 @@ public class Lecture {
         this.appUserId = appUserId;
     }
 
-    public int getAttendees() {
-        return attendees;
+    public int getNumberOfAttendees() {
+        return numberOfAttendees;
     }
 
-    public void setAttendees(int attendees) {
-        this.attendees = attendees;
+    public void setNumberOfAttendees(int attendees) {
+        this.numberOfAttendees = attendees;
     }
 
     @Override

@@ -8,6 +8,8 @@ import pl.staz.ItConf.exception.UserAlreadyAttendsThisLecture;
 import pl.staz.ItConf.model.Lecture;
 import pl.staz.ItConf.model.TopicsLecture;
 import pl.staz.ItConf.model.User;
+import pl.staz.ItConf.model.dao.LectureDao;
+import pl.staz.ItConf.model.dto.LectureDto;
 import pl.staz.ItConf.repository.UserRepository;
 
 import java.util.Arrays;
@@ -24,22 +26,22 @@ public class LectureService {
         this.userRepository = userRepository;
     }
 
-    List<TopicsLecture> topic1 = Arrays.asList(
-            new TopicsLecture(1L, 1L, 4),
-            new TopicsLecture(1L, 2L, 0),
-            new TopicsLecture(1L, 3L, 0)
+    List<LectureDao> topic1 = Arrays.asList(
+            new LectureDao(1L, 1L, 4),
+            new LectureDao(1L, 2L, 0),
+            new LectureDao(1L, 3L, 0)
     );
 
-    List<TopicsLecture> topic2 = Arrays.asList(
-            new TopicsLecture(2L, 1L, 0),
-            new TopicsLecture(2L, 2L, 0),
-            new TopicsLecture(2L, 3L, 0)
+    List<LectureDao> topic2 = Arrays.asList(
+            new LectureDao(2L, 1L, 0),
+            new LectureDao(2L, 2L, 0),
+            new LectureDao(2L, 3L, 0)
     );
 
-    List<TopicsLecture> topic3 = Arrays.asList(
-            new TopicsLecture(3L, 1L, 0),
-            new TopicsLecture(3L, 2L, 0),
-            new TopicsLecture(3L, 3L, 0)
+    List<LectureDao> topic3 = Arrays.asList(
+            new LectureDao(3L, 1L, 0),
+            new LectureDao(3L, 2L, 0),
+            new LectureDao(3L, 3L, 0)
     );
 
 
@@ -60,39 +62,39 @@ public class LectureService {
             switch (topicId.intValue()) {
                 case 1:
 
-                    TopicsLecture lecture1 = topic1.get(lectureId.intValue() - 1);
+                    LectureDao lecture1 = topic1.get(lectureId.intValue() - 1);
                     lectureToAdd.setLectureNumber(lecture1.getLectureNumber());
-                    lectureToAdd.setTopicNumber(lecture1.getTopicId());
+                    lectureToAdd.setTopicNumber(lecture1.getTopicNumber());
                     lectureToAdd.setAppUserId(loggedUser.getId());
                     if(lecture1.getNumberOfAttendees() >= 5)
                         throw new NotEnoughSeatsException("Lecture is full");
-                    lectureToAdd.setAttendees(lecture1.getNumberOfAttendees() + 1);
-                    lecture1.setNumberOfAttendees(lectureToAdd.getAttendees());
-                    System.out.println(lectureToAdd.getAttendees());
+                    lectureToAdd.setNumberOfAttendees(lecture1.getNumberOfAttendees() + 1);
+                    lecture1.setNumberOfAttendees(lectureToAdd.getNumberOfAttendees());
+                    System.out.println(lectureToAdd.getNumberOfAttendees());
                     loggedUser.addLecture(lectureToAdd);
                     userRepository.save(loggedUser);
                     break;
                 case 2:
-                    TopicsLecture lecture2 = topic2.get(lectureId.intValue());
+                    LectureDao lecture2 = topic2.get(lectureId.intValue());
                     lectureToAdd.setLectureNumber(lecture2.getLectureNumber());
-                    lectureToAdd.setTopicNumber(lecture2.getTopicId());
+                    lectureToAdd.setTopicNumber(lecture2.getTopicNumber());
                     lectureToAdd.setAppUserId(loggedUser.getId());
                     if(lecture2.getNumberOfAttendees() >= 5)
                         throw new NotEnoughSeatsException("Lecture is full");
-                    lectureToAdd.setAttendees(lecture2.getNumberOfAttendees() + 1);
-                    lecture2.setNumberOfAttendees(lectureToAdd.getAttendees());
+                    lectureToAdd.setNumberOfAttendees(lecture2.getNumberOfAttendees() + 1);
+                    lecture2.setNumberOfAttendees(lectureToAdd.getNumberOfAttendees());
                     loggedUser.addLecture(lectureToAdd);
                     userRepository.save(loggedUser);
                     break;
                 case 3:
-                    TopicsLecture lecture3 = topic3.get(lectureId.intValue());
+                    LectureDao lecture3 = topic3.get(lectureId.intValue());
                     lectureToAdd.setLectureNumber(lecture3.getLectureNumber());
-                    lectureToAdd.setTopicNumber(lecture3.getTopicId());
+                    lectureToAdd.setTopicNumber(lecture3.getTopicNumber());
                     lectureToAdd.setAppUserId(loggedUser.getId());
                     if(lecture3.getNumberOfAttendees() >= 5)
                         throw new NotEnoughSeatsException("Lecture is full");
-                    lectureToAdd.setAttendees(lecture3.getNumberOfAttendees() + 1);
-                    lecture3.setNumberOfAttendees(lectureToAdd.getAttendees());
+                    lectureToAdd.setNumberOfAttendees(lecture3.getNumberOfAttendees() + 1);
+                    lecture3.setNumberOfAttendees(lectureToAdd.getNumberOfAttendees());
                     loggedUser.addLecture(lectureToAdd);
                     userRepository.save(loggedUser);
                     break;
@@ -102,4 +104,9 @@ public class LectureService {
     }
 
 
+    public List<LectureDao> getListOfLectures() {
+
+
+        return null;
+    }
 }

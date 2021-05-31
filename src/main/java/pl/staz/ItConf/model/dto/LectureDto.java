@@ -5,10 +5,12 @@ import javax.persistence.Column;
 public class LectureDto {
 
     private Long lectureId;
-    private int topicNumber;
+    private Long topicNumber;
     private Long appUserId;
+    private String startHour;
+    private String endHour;
 
-    public LectureDto(Long lectureId, int topicNumber, Long appUserId) {
+    public LectureDto(Long lectureId, Long topicNumber, Long appUserId) {
         this.lectureId = lectureId;
         this.topicNumber = topicNumber;
         this.appUserId = appUserId;
@@ -18,7 +20,7 @@ public class LectureDto {
         return lectureId;
     }
 
-    public int getTopicNumber() {
+    public Long getTopicNumber() {
         return topicNumber;
     }
 

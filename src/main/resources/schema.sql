@@ -11,7 +11,7 @@ CREATE TABLE app_user
 CREATE TABLE lecture
 (
     id           IDENTITY NOT NULL PRIMARY KEY,
-    lecture_id   INT       NOT NULL,
+    lecture_number   INT       NOT NULL,
     topic_number INT       NOT NULL,
     attendees   INT NOT NULL ,
     app_user_id INT REFERENCES app_user(id)
