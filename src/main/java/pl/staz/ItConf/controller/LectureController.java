@@ -8,13 +8,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pl.staz.ItConf.config.UserSession;
 import pl.staz.ItConf.exception.UserNotLoggedException;
-import pl.staz.ItConf.model.Lecture;
 import pl.staz.ItConf.model.dao.LectureDao;
-import pl.staz.ItConf.model.dto.LectureDto;
-import pl.staz.ItConf.repository.LectureRepository;
 import pl.staz.ItConf.service.LectureService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -29,11 +25,11 @@ public class LectureController {
     }
 
     @PostMapping("/signForLecture")
-    public ResponseEntity<HttpStatus> signInForLecture(@RequestParam Long topicId, @RequestParam Long lectureId){
+    public ResponseEntity<HttpStatus> signInForLecture(@RequestParam Long topicNumber, @RequestParam Long lectureNumber){
     if(!userSession.isLoggedIn())
         throw new UserNotLoggedException("You need to login");
 
-    lectureService.signUpForLecture(topicId, lectureId);
+    lectureService.signUpForLecture(topicNumber, lectureNumber);
 
 
     return new ResponseEntity<>(HttpStatus.ACCEPTED);
@@ -46,7 +42,15 @@ public class LectureController {
         return new ResponseEntity<>(returnList, HttpStatus.OK);
     }
 
-   
+    @GetMapping("/usersLectures")
+    public ResponseEntity<List<LectureDao>> getListOfUsersLectures(){
+        List<LectureDao> returnList = lectureService.getListOfUsersLectures();
+
+        return new ResponseEntity<>(returnList, HttpStatus.OK);
+    }
+
+
+
 
 
 

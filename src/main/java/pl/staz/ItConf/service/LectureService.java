@@ -1,10 +1,12 @@
 package pl.staz.ItConf.service;
 
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import pl.staz.ItConf.config.UserSession;
 import pl.staz.ItConf.exception.NotEnoughSeatsException;
 import pl.staz.ItConf.exception.UserAlreadyAttendsException;
 import pl.staz.ItConf.exception.UserAlreadyAttendsThisLecture;
+import pl.staz.ItConf.exception.UserNotLoggedException;
 import pl.staz.ItConf.model.Lecture;
 import pl.staz.ItConf.model.TopicsLecture;
 import pl.staz.ItConf.model.User;
@@ -46,24 +48,25 @@ public class LectureService {
     );
 
 
-    public void signUpForLecture(Long topicId, Long lectureId) {
+    public void signUpForLecture(Long topicNumber, Long lectureNumber) {
         User loggedUser = userRepository.findUserByUsername(userSession.getUsername());
+        System.out.println(loggedUser.getId());
         Lecture lectureToAdd = new Lecture();
         System.out.println(loggedUser.getAttendedLectures());
 
 
 
         for (Lecture lecture : loggedUser.getAttendedLectures()) {
-            if(lecture.getLectureNumber().equals(lectureId))
+            if(lecture.getLectureNumber().equals(lectureNumber))
                 throw new UserAlreadyAttendsException("User already attends lecture at this time");
-            if (lecture.getLectureNumber().equals(lectureId) && lecture.getTopicNumber().equals(topicId))
+            if (lecture.getLectureNumber().equals(lectureNumber) && lecture.getTopicNumber().equals(topicNumber))
                 throw new UserAlreadyAttendsThisLecture("User already attends this lecture");
 
         }
-            switch (topicId.intValue()) {
+            switch (topicNumber.intValue()) {
                 case 1:
 
-                    LectureDao lecture1 = topic1.get(lectureId.intValue() - 1);
+                    LectureDao lecture1 = topic1.get(lectureNumber.intValue() - 1);
                     lectureToAdd.setLectureNumber(lecture1.getLectureNumber());
                     lectureToAdd.setTopicNumber(lecture1.getTopicNumber());
                     lectureToAdd.setAppUserId(loggedUser.getId());
@@ -71,12 +74,11 @@ public class LectureService {
                         throw new NotEnoughSeatsException("Lecture is full");
                     lectureToAdd.setNumberOfAttendees(lecture1.getNumberOfAttendees() + 1);
                     lecture1.setNumberOfAttendees(lectureToAdd.getNumberOfAttendees());
-                    System.out.println(lectureToAdd.getNumberOfAttendees());
                     loggedUser.addLecture(lectureToAdd);
                     userRepository.save(loggedUser);
                     break;
                 case 2:
-                    LectureDao lecture2 = topic2.get(lectureId.intValue());
+                    LectureDao lecture2 = topic2.get(lectureNumber.intValue()- 1);
                     lectureToAdd.setLectureNumber(lecture2.getLectureNumber());
                     lectureToAdd.setTopicNumber(lecture2.getTopicNumber());
                     lectureToAdd.setAppUserId(loggedUser.getId());
@@ -88,7 +90,7 @@ public class LectureService {
                     userRepository.save(loggedUser);
                     break;
                 case 3:
-                    LectureDao lecture3 = topic3.get(lectureId.intValue());
+                    LectureDao lecture3 = topic3.get(lectureNumber.intValue()- 1);
                     lectureToAdd.setLectureNumber(lecture3.getLectureNumber());
                     lectureToAdd.setTopicNumber(lecture3.getTopicNumber());
                     lectureToAdd.setAppUserId(loggedUser.getId());
@@ -111,6 +113,19 @@ public class LectureService {
         returnList.addAll(topic1);
         returnList.addAll(topic2);
         returnList.addAll(topic3);
+
+        return returnList;
+    }
+
+    public List<LectureDao> getListOfUsersLectures() {
+        if(!userSession.isLoggedIn())
+            throw new UserNotLoggedException("User is not logged in");
+        User loggedUser = userRepository.findUserByUsername(userSession.getUsername());
+        List<LectureDao> returnList = new ArrayList<>();
+
+        for(Lecture lecture : loggedUser.getAttendedLectures()){
+            returnList.add(new LectureDao(lecture.getLectureNumber(),lecture.getTopicNumber(),lecture.getNumberOfAttendees()));
+        }
 
         return returnList;
     }
