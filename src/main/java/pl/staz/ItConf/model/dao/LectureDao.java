@@ -2,16 +2,16 @@ package pl.staz.ItConf.model.dao;
 
 public class LectureDao {
 
-    private final Long lectureNumber;
     private final Long topicNumber;
+    private final Long lectureNumber;
     private Long appUserId;
     private  int numberOfAttendees;
     private String startHour;
     private String endHour;
 
     public LectureDao(Long lectureNumber, Long topicNumber, int numberOfAttendees) {
-        this.lectureNumber = lectureNumber;
         this.topicNumber = topicNumber;
+        this.lectureNumber = lectureNumber;
         this.numberOfAttendees = numberOfAttendees;
 
         switch (lectureNumber.intValue()){

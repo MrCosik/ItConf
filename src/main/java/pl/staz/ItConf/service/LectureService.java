@@ -12,6 +12,7 @@ import pl.staz.ItConf.model.dao.LectureDao;
 import pl.staz.ItConf.model.dto.LectureDto;
 import pl.staz.ItConf.repository.UserRepository;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -28,19 +29,19 @@ public class LectureService {
 
     List<LectureDao> topic1 = Arrays.asList(
             new LectureDao(1L, 1L, 4),
-            new LectureDao(1L, 2L, 0),
-            new LectureDao(1L, 3L, 0)
+            new LectureDao(2L, 1L, 0),
+            new LectureDao(3L, 1L, 0)
     );
 
     List<LectureDao> topic2 = Arrays.asList(
-            new LectureDao(2L, 1L, 0),
+            new LectureDao(1L, 2L, 0),
             new LectureDao(2L, 2L, 0),
-            new LectureDao(2L, 3L, 0)
+            new LectureDao(3L, 2L, 0)
     );
 
     List<LectureDao> topic3 = Arrays.asList(
-            new LectureDao(3L, 1L, 0),
-            new LectureDao(3L, 2L, 0),
+            new LectureDao(1L, 3L, 0),
+            new LectureDao(2L, 3L, 0),
             new LectureDao(3L, 3L, 0)
     );
 
@@ -105,8 +106,12 @@ public class LectureService {
 
 
     public List<LectureDao> getListOfLectures() {
+        List<LectureDao> returnList = new ArrayList<>();
 
+        returnList.addAll(topic1);
+        returnList.addAll(topic2);
+        returnList.addAll(topic3);
 
-        return null;
+        return returnList;
     }
 }

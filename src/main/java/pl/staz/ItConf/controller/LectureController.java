@@ -9,10 +9,12 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.staz.ItConf.config.UserSession;
 import pl.staz.ItConf.exception.UserNotLoggedException;
 import pl.staz.ItConf.model.Lecture;
+import pl.staz.ItConf.model.dao.LectureDao;
 import pl.staz.ItConf.model.dto.LectureDto;
 import pl.staz.ItConf.repository.LectureRepository;
 import pl.staz.ItConf.service.LectureService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -38,11 +40,14 @@ public class LectureController {
     }
 
     @GetMapping("/conference")
-    public ResponseEntity<List<LectureDto>> getListOfLectures(){
-        lectureService.getListOfLectures();
+    public ResponseEntity<List<LectureDao>> getListOfLectures(){
+        List<LectureDao> returnList = lectureService.getListOfLectures();
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(returnList, HttpStatus.OK);
     }
+
+   
+
 
 
 }
