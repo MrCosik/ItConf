@@ -3,9 +3,7 @@ package pl.staz.ItConf.controller;
 import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 import pl.staz.ItConf.exception.UserAlreadyExistsException;
 import pl.staz.ItConf.model.User;
@@ -39,9 +37,15 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<UserDto> login(@RequestBody UserDto userDto){
         if(authenticationService.login(userDto))
-            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+            return new ResponseEntity<>(HttpStatus.OK);
 
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    }
 
+    @GetMapping("/signout")
+//    @RequestMapping(method = { RequestMethod.GET, RequestMethod.POST }, produces="application/json", name = "/signout")
+    public void logout(){
+        authenticationService.logout();
+//        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

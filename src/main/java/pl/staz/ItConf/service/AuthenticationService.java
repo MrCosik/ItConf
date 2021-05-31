@@ -24,12 +24,12 @@ public class AuthenticationService {
         User potentialUser = userRepository.findUserByUsername(userDto.getUsername());
 
         if (!userSession.isLoggedIn()) {
-            if(potentialUser != null) {
+            if (potentialUser != null) {
                 if (potentialUser.getUsername().equals(userDto.getUsername()) && potentialUser.getEmail().equals(userDto.getEmail())) {
                     userSession.logIn(potentialUser);
                     return true;
                 }
-            }else{
+            } else {
                 throw new UserDoesntExistException("This username is not registered");
             }
         } else {
@@ -37,6 +37,18 @@ public class AuthenticationService {
         }
         return false;
     }
+
+    public void logout() {
+//        User loggedUser = userRepository.findUserByUsername(userDto.getUsername());
+
+        if (!userSession.isLoggedIn())
+            throw new UserAlreadyLoggedException("User already logged");
+
+        userSession.logOut();
+
+    }
+
+
 
 
 }

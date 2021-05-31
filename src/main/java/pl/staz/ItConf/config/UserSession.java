@@ -17,6 +17,11 @@ public class UserSession {
         username = user.getUsername();
     }
 
+    public void logOut(){
+        isLogged = false;
+        username = null;
+    }
+
     public boolean isLoggedIn() {
         return isLogged;
     }
