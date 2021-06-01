@@ -1,6 +1,5 @@
 package pl.staz.ItConf.service;
 
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import pl.staz.ItConf.config.UserSession;
 import pl.staz.ItConf.exception.UserAlreadyLoggedException;
@@ -39,16 +38,10 @@ public class AuthenticationService {
     }
 
     public void logout() {
-//        User loggedUser = userRepository.findUserByUsername(userDto.getUsername());
-
         if (!userSession.isLoggedIn())
             throw new UserAlreadyLoggedException("User already logged");
 
         userSession.logOut();
-
     }
-
-
-
 
 }

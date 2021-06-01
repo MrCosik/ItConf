@@ -1,14 +1,11 @@
 package pl.staz.ItConf.service;
 
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import pl.staz.ItConf.config.UserSession;
 import pl.staz.ItConf.exception.*;
 import pl.staz.ItConf.model.Lecture;
-import pl.staz.ItConf.model.TopicsLecture;
 import pl.staz.ItConf.model.User;
 import pl.staz.ItConf.model.dao.LectureDao;
-import pl.staz.ItConf.model.dto.LectureDto;
 import pl.staz.ItConf.repository.UserRepository;
 
 import java.io.FileWriter;
@@ -52,57 +49,56 @@ public class LectureService {
         Lecture lectureToAdd = new Lecture();
 
 
-
         for (Lecture lecture : loggedUser.getAttendedLectures()) {
-            if(lecture.getLectureNumber().equals(lectureNumber))
+            if (lecture.getLectureNumber().equals(lectureNumber))
                 throw new UserAlreadyAttendsException("User already attends lecture at this time");
             if (lecture.getLectureNumber().equals(lectureNumber) && lecture.getTopicNumber().equals(topicNumber))
                 throw new UserAlreadyAttendsThisLecture("User already attends this lecture");
 
         }
-            switch (topicNumber.intValue()) {
-                case 1:
+        switch (topicNumber.intValue()) {
+            case 1:
 
-                    LectureDao lecture1 = topic1.get(lectureNumber.intValue() - 1);
-                    lectureToAdd.setLectureNumber(lecture1.getLectureNumber());
-                    lectureToAdd.setTopicNumber(lecture1.getTopicNumber());
-                    lectureToAdd.setAppUserId(loggedUser.getId());
-                    if(lecture1.getNumberOfAttendees() >= 5)
-                        throw new NotEnoughSeatsException("Lecture is full");
-                    lectureToAdd.setNumberOfAttendees(lecture1.getNumberOfAttendees() + 1);
-                    lecture1.setNumberOfAttendees(lectureToAdd.getNumberOfAttendees());
-                    sendEmailConfirmation(lectureToAdd.toString(loggedUser.getUsername(),loggedUser.getEmail()));
-                    loggedUser.addLecture(lectureToAdd);
-                    userRepository.save(loggedUser);
-                    break;
-                case 2:
-                    LectureDao lecture2 = topic2.get(lectureNumber.intValue()- 1);
-                    lectureToAdd.setLectureNumber(lecture2.getLectureNumber());
-                    lectureToAdd.setTopicNumber(lecture2.getTopicNumber());
-                    lectureToAdd.setAppUserId(loggedUser.getId());
-                    if(lecture2.getNumberOfAttendees() >= 5)
-                        throw new NotEnoughSeatsException("Lecture is full");
-                    lectureToAdd.setNumberOfAttendees(lecture2.getNumberOfAttendees() + 1);
-                    sendEmailConfirmation(lectureToAdd.toString(loggedUser.getUsername(),loggedUser.getEmail()));
-                    lecture2.setNumberOfAttendees(lectureToAdd.getNumberOfAttendees());
-                    loggedUser.addLecture(lectureToAdd);
-                    userRepository.save(loggedUser);
-                    break;
-                case 3:
-                    LectureDao lecture3 = topic3.get(lectureNumber.intValue()- 1);
-                    lectureToAdd.setLectureNumber(lecture3.getLectureNumber());
-                    lectureToAdd.setTopicNumber(lecture3.getTopicNumber());
-                    lectureToAdd.setAppUserId(loggedUser.getId());
-                    if(lecture3.getNumberOfAttendees() >= 5)
-                        throw new NotEnoughSeatsException("Lecture is full");
-                    lectureToAdd.setNumberOfAttendees(lecture3.getNumberOfAttendees() + 1);
-                    sendEmailConfirmation(lectureToAdd.toString(loggedUser.getUsername(),loggedUser.getEmail()));
-                    lecture3.setNumberOfAttendees(lectureToAdd.getNumberOfAttendees());
-                    loggedUser.addLecture(lectureToAdd);
-                    userRepository.save(loggedUser);
-                    break;
+                LectureDao lecture1 = topic1.get(lectureNumber.intValue() - 1);
+                lectureToAdd.setLectureNumber(lecture1.getLectureNumber());
+                lectureToAdd.setTopicNumber(lecture1.getTopicNumber());
+                lectureToAdd.setAppUserId(loggedUser.getId());
+                if (lecture1.getNumberOfAttendees() >= 5)
+                    throw new NotEnoughSeatsException("Lecture is full");
+                lectureToAdd.setNumberOfAttendees(lecture1.getNumberOfAttendees() + 1);
+                lecture1.setNumberOfAttendees(lectureToAdd.getNumberOfAttendees());
+                sendEmailConfirmation(lectureToAdd.toString(loggedUser.getUsername(), loggedUser.getEmail()));
+                loggedUser.addLecture(lectureToAdd);
+                userRepository.save(loggedUser);
+                break;
+            case 2:
+                LectureDao lecture2 = topic2.get(lectureNumber.intValue() - 1);
+                lectureToAdd.setLectureNumber(lecture2.getLectureNumber());
+                lectureToAdd.setTopicNumber(lecture2.getTopicNumber());
+                lectureToAdd.setAppUserId(loggedUser.getId());
+                if (lecture2.getNumberOfAttendees() >= 5)
+                    throw new NotEnoughSeatsException("Lecture is full");
+                lectureToAdd.setNumberOfAttendees(lecture2.getNumberOfAttendees() + 1);
+                sendEmailConfirmation(lectureToAdd.toString(loggedUser.getUsername(), loggedUser.getEmail()));
+                lecture2.setNumberOfAttendees(lectureToAdd.getNumberOfAttendees());
+                loggedUser.addLecture(lectureToAdd);
+                userRepository.save(loggedUser);
+                break;
+            case 3:
+                LectureDao lecture3 = topic3.get(lectureNumber.intValue() - 1);
+                lectureToAdd.setLectureNumber(lecture3.getLectureNumber());
+                lectureToAdd.setTopicNumber(lecture3.getTopicNumber());
+                lectureToAdd.setAppUserId(loggedUser.getId());
+                if (lecture3.getNumberOfAttendees() >= 5)
+                    throw new NotEnoughSeatsException("Lecture is full");
+                lectureToAdd.setNumberOfAttendees(lecture3.getNumberOfAttendees() + 1);
+                sendEmailConfirmation(lectureToAdd.toString(loggedUser.getUsername(), loggedUser.getEmail()));
+                lecture3.setNumberOfAttendees(lectureToAdd.getNumberOfAttendees());
+                loggedUser.addLecture(lectureToAdd);
+                userRepository.save(loggedUser);
+                break;
 
-            }
+        }
 
     }
 
@@ -118,28 +114,26 @@ public class LectureService {
     }
 
     public List<LectureDao> getListOfUsersLectures() {
-        if(!userSession.isLoggedIn())
+        if (!userSession.isLoggedIn())
             throw new UserNotLoggedException("User is not logged in");
         User loggedUser = userRepository.findUserByUsername(userSession.getUsername());
         List<LectureDao> returnList = new ArrayList<>();
 
-        for(Lecture lecture : loggedUser.getAttendedLectures()){
-            returnList.add(new LectureDao(lecture.getLectureNumber(),lecture.getTopicNumber(),lecture.getNumberOfAttendees()));
+        for (Lecture lecture : loggedUser.getAttendedLectures()) {
+            returnList.add(new LectureDao(lecture.getLectureNumber(), lecture.getTopicNumber(), lecture.getNumberOfAttendees()));
         }
 
         return returnList;
     }
 
-    private void sendEmailConfirmation(String lecture){
+    private void sendEmailConfirmation(String lecture) {
 
         try {
             FileWriter output
                     = new FileWriter("emails.txt", true);
             output.write(lecture);
             output.close();
-        }
-
-        catch (Exception e) {
+        } catch (Exception e) {
             e.getStackTrace();
         }
     }
@@ -151,7 +145,7 @@ public class LectureService {
                 .filter(lecture -> lecture.getLectureNumber().equals(lectureNumber))
                 .collect(Collectors.toList());
 
-        if(lecturesToRemove.size() == 0)
+        if (lecturesToRemove.size() == 0)
             throw new UserDoesntAttendAnyLecture("You don't attend any lecture");
 
         loggedUser.getAttendedLectures().remove(lecturesToRemove.get(0));

@@ -31,40 +31,40 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<UserDto> register(@RequestBody UserDto userDto){
+    public ResponseEntity<UserDto> register(@RequestBody UserDto userDto) {
         User savedUser;
-        if(userService.findUserByUsername(userDto.getUsername()) == null) {
-             savedUser = userService.saveUser(userDto);
-        }else {
+        if (userService.findUserByUsername(userDto.getUsername()) == null) {
+            savedUser = userService.saveUser(userDto);
+        } else {
             throw new UserAlreadyExistsException("User already exists");
         }
         return new ResponseEntity<>(UserDto.from(savedUser), HttpStatus.OK);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<UserDto> login(@RequestBody UserDto userDto){
-        if(authenticationService.login(userDto))
+    public ResponseEntity<UserDto> login(@RequestBody UserDto userDto) {
+        if (authenticationService.login(userDto))
             return new ResponseEntity<>(HttpStatus.OK);
 
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 
     @GetMapping("/signout")
-    public void logout(){
+    public void logout() {
         authenticationService.logout();
 //        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/registeredUsers")
-    public ResponseEntity<List<UserDto>> showRegisteredUsers(){
+    public ResponseEntity<List<UserDto>> showRegisteredUsers() {
         List<UserDto> allUsers = userService.showAllRegisteredUsers();
 
-        return new ResponseEntity<>(allUsers,HttpStatus.OK);
+        return new ResponseEntity<>(allUsers, HttpStatus.OK);
     }
 
     @PostMapping("/changeEmail")
-    public ResponseEntity<UserDto> changeEmail(@RequestBody UserEmailDto userEmailDto){
-        if(!userSession.isLoggedIn())
+    public ResponseEntity<UserDto> changeEmail(@RequestBody UserEmailDto userEmailDto) {
+        if (!userSession.isLoggedIn())
             throw new UserNotLoggedException("You are not logged in");
 
         UserDto changedUser = userService.changeEmail(userEmailDto);

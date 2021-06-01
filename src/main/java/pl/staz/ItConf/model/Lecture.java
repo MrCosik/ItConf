@@ -72,7 +72,7 @@ public class Lecture {
         this.numberOfAttendees = attendees;
     }
 
-    public String toString( String username, String email) {
+    public String toString(String username, String email) {
         DateTimeFormatter dtf1 = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
 //        LocalDateTime localDateTime = LocalDateTime.now();
         ZonedDateTime zonedDateTime = ZonedDateTime.now();
@@ -80,7 +80,7 @@ public class Lecture {
         String startHour = "00:00";
         String endHour = "1:45";
 
-        switch (lectureNumber.intValue()){
+        switch (lectureNumber.intValue()) {
             case 1:
                 startHour = "10:00";
                 endHour = "11:45";
@@ -96,10 +96,10 @@ public class Lecture {
 
         }
 
-        return "To: " + email +" <"+username+">\n"+
-                "From: DefinitelyNotABot@TheGreatestITCompany.com"+
-                "You have signed for lecture nr: " + lectureNumber + ", ont topic nr: " + topicNumber+".\n" +
-                "The lecture starts at: " + startHour + " and ends at: " + endHour +".\n"+
-                "Message send at: "+ dtf1.format(zonedDateTime) +"\n";
+        return "To: " + email + " <" + username + ">\n" +
+                "From: DefinitelyNotABot@TheGreatestITCompany.com" +
+                "You have signed for lecture nr: " + lectureNumber + ", ont topic nr: " + topicNumber + ".\n" +
+                "The lecture starts at: " + startHour + " and ends at: " + endHour + ".\n" +
+                "Message send at: " + dtf1.format(zonedDateTime) + "\n";
     }
 }

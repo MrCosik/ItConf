@@ -6,6 +6,4 @@ import pl.staz.ItConf.model.Lecture;
 
 @Repository
 public interface LectureRepository extends CrudRepository<Lecture, Long> {
-
-
 }

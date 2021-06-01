@@ -5,7 +5,7 @@ public class LectureDao {
     private final Long topicNumber;
     private final Long lectureNumber;
     private Long appUserId;
-    private  int numberOfAttendees;
+    private int numberOfAttendees;
     private String startHour;
     private String endHour;
 
@@ -14,7 +14,7 @@ public class LectureDao {
         this.lectureNumber = lectureNumber;
         this.numberOfAttendees = numberOfAttendees;
 
-        switch (lectureNumber.intValue()){
+        switch (lectureNumber.intValue()) {
             case 1:
                 startHour = "10:00";
                 endHour = "11:45";
@@ -36,24 +36,6 @@ public class LectureDao {
         this.topicNumber = topicNumber;
         this.appUserId = appUserId;
         this.numberOfAttendees = numberOfAttendees;
-
-//        switch (lectureNumber.intValue()){
-//            case 1:
-//                startHour = "10:00";
-//                endHour = "11:45";
-//                break;
-//            case 2:
-//                startHour = "12:00";
-//                endHour = "13:45";
-//                break;
-//            case 3:
-//                startHour = "14:00";
-//                endHour = "15:45";
-//                break;
-//
-//        }
-
-
     }
 
     public Long getLectureNumber() {

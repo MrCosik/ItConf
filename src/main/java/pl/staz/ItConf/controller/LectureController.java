@@ -22,38 +22,34 @@ public class LectureController {
     }
 
     @PostMapping("/signForLecture")
-    public ResponseEntity<HttpStatus> signInForLecture(@RequestParam Long topicNumber, @RequestParam Long lectureNumber){
-    if(!userSession.isLoggedIn())
-        throw new UserNotLoggedException("You need to login");
+    public ResponseEntity<HttpStatus> signInForLecture(@RequestParam Long topicNumber, @RequestParam Long lectureNumber) {
+        if (!userSession.isLoggedIn())
+            throw new UserNotLoggedException("You need to login");
 
-    lectureService.signUpForLecture(topicNumber, lectureNumber);
+        lectureService.signUpForLecture(topicNumber, lectureNumber);
 
 
-    return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/conference")
-    public ResponseEntity<List<LectureDao>> getListOfLectures(){
+    public ResponseEntity<List<LectureDao>> getListOfLectures() {
         List<LectureDao> returnList = lectureService.getListOfLectures();
 
         return new ResponseEntity<>(returnList, HttpStatus.OK);
     }
 
     @GetMapping("/usersLectures")
-    public ResponseEntity<List<LectureDao>> getListOfUsersLectures(){
+    public ResponseEntity<List<LectureDao>> getListOfUsersLectures() {
         List<LectureDao> returnList = lectureService.getListOfUsersLectures();
 
         return new ResponseEntity<>(returnList, HttpStatus.OK);
     }
 
     @GetMapping("/cancelLecture/{lectureNumber}")
-    public void cancelUsersAttendanceToALecture(@PathVariable Long lectureNumber){
+    public void cancelUsersAttendanceToALecture(@PathVariable Long lectureNumber) {
         lectureService.cancelLecture(lectureNumber);
     }
-
-
-
-
 
 
 }

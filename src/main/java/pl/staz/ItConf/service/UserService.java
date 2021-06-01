@@ -37,7 +37,7 @@ public class UserService {
     public List<UserDto> showAllRegisteredUsers() {
         List<UserDto> allUsers = new ArrayList<>();
 
-        for(User user : userRepository.findAll()){
+        for (User user : userRepository.findAll()) {
             allUsers.add(new UserDto(user.getUsername(), user.getEmail()));
         }
         return allUsers;
