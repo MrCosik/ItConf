@@ -3,10 +3,7 @@ package pl.staz.ItConf.service;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import pl.staz.ItConf.config.UserSession;
-import pl.staz.ItConf.exception.NotEnoughSeatsException;
-import pl.staz.ItConf.exception.UserAlreadyAttendsException;
-import pl.staz.ItConf.exception.UserAlreadyAttendsThisLecture;
-import pl.staz.ItConf.exception.UserNotLoggedException;
+import pl.staz.ItConf.exception.*;
 import pl.staz.ItConf.model.Lecture;
 import pl.staz.ItConf.model.TopicsLecture;
 import pl.staz.ItConf.model.User;
@@ -18,6 +15,7 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class LectureService {
@@ -133,22 +131,32 @@ public class LectureService {
     }
 
     private void sendEmailConfirmation(String lecture){
-//        String data = "Welcome to gfg";
 
         try {
-            // Creates a FileWriter
             FileWriter output
                     = new FileWriter("emails.txt", true);
-
-            // Writes the string to the file
             output.write(lecture);
-
-            // Closes the writer
             output.close();
         }
 
         catch (Exception e) {
             e.getStackTrace();
         }
+    }
+
+    public void cancelLecture(Long lectureNumber) {
+        User loggedUser = userRepository.findUserByUsername(userSession.getUsername());
+        List<Lecture> lecturesToRemove = loggedUser.getAttendedLectures()
+                .stream()
+                .filter(lecture -> lecture.getLectureNumber().equals(lectureNumber))
+                .collect(Collectors.toList());
+
+        if(lecturesToRemove.size() == 0)
+            throw new UserDoesntAttendAnyLecture("You don't attend any lecture");
+
+        loggedUser.getAttendedLectures().remove(lecturesToRemove.get(0));
+
+
+        userRepository.save(loggedUser);
     }
 }

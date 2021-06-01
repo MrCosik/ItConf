@@ -43,4 +43,9 @@ public class ExceptionsHandler {
     public ResponseEntity<Object> handleNotEnoughSeatsException(NotEnoughSeatsException e){
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(value = {UserDoesntAttendAnyLecture.class})
+    public ResponseEntity<Object> handleUserDoesntAttendAnyLecture(UserDoesntAttendAnyLecture e){
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
 }
