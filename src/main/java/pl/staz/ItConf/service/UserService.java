@@ -5,6 +5,9 @@ import pl.staz.ItConf.model.User;
 import pl.staz.ItConf.model.dto.UserDto;
 import pl.staz.ItConf.repository.UserRepository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class UserService {
 
@@ -24,5 +27,14 @@ public class UserService {
 
     public User findUserByUsername(String username) {
         return userRepository.findUserByUsername(username);
+    }
+
+    public List<UserDto> showAllRegisteredUsers() {
+        List<UserDto> allUsers = new ArrayList<>();
+
+        for(User user : userRepository.findAll()){
+            allUsers.add(new UserDto(user.getUsername(), user.getEmail()));
+        }
+        return allUsers;
     }
 }

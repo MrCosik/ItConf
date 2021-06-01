@@ -12,6 +12,7 @@ import pl.staz.ItConf.service.AuthenticationService;
 import pl.staz.ItConf.service.UserService;
 
 import java.net.http.HttpResponse;
+import java.util.List;
 
 @RestController
 public class UserController {
@@ -47,4 +48,13 @@ public class UserController {
         authenticationService.logout();
 //        return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @GetMapping("/registeredUsers")
+    public ResponseEntity<List<UserDto>> showRegisteredUsers(){
+        List<UserDto> allUsers = userService.showAllRegisteredUsers();
+
+        return new ResponseEntity<>(allUsers,HttpStatus.OK);
+    }
+
+
 }
