@@ -1,8 +1,10 @@
 package pl.staz.ItConf.service;
 
 import org.springframework.stereotype.Component;
+import pl.staz.ItConf.config.UserSession;
 import pl.staz.ItConf.model.User;
 import pl.staz.ItConf.model.dto.UserDto;
+import pl.staz.ItConf.model.dto.UserEmailDto;
 import pl.staz.ItConf.repository.UserRepository;
 
 import java.util.ArrayList;
@@ -12,9 +14,12 @@ import java.util.List;
 public class UserService {
 
     UserRepository userRepository;
+    UserSession userSession;
 
-    public UserService(UserRepository userRepository) {
+
+    public UserService(UserRepository userRepository, UserSession userSession) {
         this.userRepository = userRepository;
+        this.userSession = userSession;
     }
 
     public User saveUser(UserDto userDto) {
@@ -36,5 +41,16 @@ public class UserService {
             allUsers.add(new UserDto(user.getUsername(), user.getEmail()));
         }
         return allUsers;
+    }
+
+    public UserDto changeEmail(UserEmailDto userEmailDto) {
+        User loggedUser = userRepository.findUserByUsername(userSession.getUsername());
+
+
+        loggedUser.setEmail(userEmailDto.getEmail());
+        userRepository.save(loggedUser);
+
+
+        return new UserDto(loggedUser.getUsername(), loggedUser.getEmail());
     }
 }
