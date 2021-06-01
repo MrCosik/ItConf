@@ -14,6 +14,7 @@ import pl.staz.ItConf.model.dao.LectureDao;
 import pl.staz.ItConf.model.dto.LectureDto;
 import pl.staz.ItConf.repository.UserRepository;
 
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -30,7 +31,7 @@ public class LectureService {
     }
 
     List<LectureDao> topic1 = Arrays.asList(
-            new LectureDao(1L, 1L, 4),
+            new LectureDao(1L, 1L, 0),
             new LectureDao(2L, 1L, 0),
             new LectureDao(3L, 1L, 0)
     );
@@ -50,9 +51,7 @@ public class LectureService {
 
     public void signUpForLecture(Long topicNumber, Long lectureNumber) {
         User loggedUser = userRepository.findUserByUsername(userSession.getUsername());
-        System.out.println(loggedUser.getId());
         Lecture lectureToAdd = new Lecture();
-        System.out.println(loggedUser.getAttendedLectures());
 
 
 
@@ -74,6 +73,7 @@ public class LectureService {
                         throw new NotEnoughSeatsException("Lecture is full");
                     lectureToAdd.setNumberOfAttendees(lecture1.getNumberOfAttendees() + 1);
                     lecture1.setNumberOfAttendees(lectureToAdd.getNumberOfAttendees());
+                    sendEmailConfirmation(lectureToAdd.toString(loggedUser.getUsername(),loggedUser.getEmail()));
                     loggedUser.addLecture(lectureToAdd);
                     userRepository.save(loggedUser);
                     break;
@@ -85,6 +85,7 @@ public class LectureService {
                     if(lecture2.getNumberOfAttendees() >= 5)
                         throw new NotEnoughSeatsException("Lecture is full");
                     lectureToAdd.setNumberOfAttendees(lecture2.getNumberOfAttendees() + 1);
+                    sendEmailConfirmation(lectureToAdd.toString(loggedUser.getUsername(),loggedUser.getEmail()));
                     lecture2.setNumberOfAttendees(lectureToAdd.getNumberOfAttendees());
                     loggedUser.addLecture(lectureToAdd);
                     userRepository.save(loggedUser);
@@ -97,6 +98,7 @@ public class LectureService {
                     if(lecture3.getNumberOfAttendees() >= 5)
                         throw new NotEnoughSeatsException("Lecture is full");
                     lectureToAdd.setNumberOfAttendees(lecture3.getNumberOfAttendees() + 1);
+                    sendEmailConfirmation(lectureToAdd.toString(loggedUser.getUsername(),loggedUser.getEmail()));
                     lecture3.setNumberOfAttendees(lectureToAdd.getNumberOfAttendees());
                     loggedUser.addLecture(lectureToAdd);
                     userRepository.save(loggedUser);
@@ -128,5 +130,25 @@ public class LectureService {
         }
 
         return returnList;
+    }
+
+    private void sendEmailConfirmation(String lecture){
+//        String data = "Welcome to gfg";
+
+        try {
+            // Creates a FileWriter
+            FileWriter output
+                    = new FileWriter("emails.txt", true);
+
+            // Writes the string to the file
+            output.write(lecture);
+
+            // Closes the writer
+            output.close();
+        }
+
+        catch (Exception e) {
+            e.getStackTrace();
+        }
     }
 }

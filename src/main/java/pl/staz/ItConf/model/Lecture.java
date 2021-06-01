@@ -1,6 +1,10 @@
 package pl.staz.ItConf.model;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "lecture")
@@ -68,8 +72,34 @@ public class Lecture {
         this.numberOfAttendees = attendees;
     }
 
-    @Override
-    public String toString() {
-        return "Lecture: " + lectureNumber + " of topic nr: " + topicNumber;
+    public String toString( String username, String email) {
+        DateTimeFormatter dtf1 = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
+//        LocalDateTime localDateTime = LocalDateTime.now();
+        ZonedDateTime zonedDateTime = ZonedDateTime.now();
+
+        String startHour = "00:00";
+        String endHour = "1:45";
+
+        switch (lectureNumber.intValue()){
+            case 1:
+                startHour = "10:00";
+                endHour = "11:45";
+                break;
+            case 2:
+                startHour = "12:00";
+                endHour = "13:45";
+                break;
+            case 3:
+                startHour = "14:00";
+                endHour = "15:45";
+                break;
+
+        }
+
+        return "To: " + email +" <"+username+">\n"+
+                "From: DefinitelyNotABot@TheGreatestITCompany.com"+
+                "You have signed for lecture nr: " + lectureNumber + ", ont topic nr: " + topicNumber+".\n" +
+                "The lecture starts at: " + startHour + " and ends at: " + endHour +".\n"+
+                "Message send at: "+ dtf1.format(zonedDateTime) +"\n";
     }
 }

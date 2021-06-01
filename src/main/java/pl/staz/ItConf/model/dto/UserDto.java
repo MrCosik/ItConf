@@ -14,6 +14,8 @@ public class UserDto {
     public UserDto(String username, String email) {
         this.username = username;
         this.email = email;
+
+
     }
 
     public UserDto() {
