@@ -32,6 +32,12 @@ public class Lecture {
         this.appUserId = appUserId;
     }
 
+    public Lecture(Long lectureNumber, Long topicNumber, int numberOfAttendees) {
+        this.lectureNumber = lectureNumber;
+        this.topicNumber = topicNumber;
+        this.numberOfAttendees = numberOfAttendees;
+    }
+
     public Long getId() {
         return id;
     }
