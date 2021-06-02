@@ -22,10 +22,14 @@ public class AuthenticationService {
     public boolean login(UserDto userDto) {
         User potentialUser = userRepository.findUserByUsername(userDto.getUsername());
 
+        //check to see if user is not already logged in and then check if the credentials that user tries to login with
+        //are present in the DB, if all true service returns true and controller send HttpRequest.OK
+        //and username and email of person that tries to login, to the frontend
         if (!userSession.isLoggedIn()) {
             if (potentialUser != null) {
                 if (potentialUser.getUsername().equals(userDto.getUsername()) && potentialUser.getEmail().equals(userDto.getEmail())) {
                     userSession.logIn(potentialUser);
+                    System.out.println("Log in");
                     return true;
                 }
             } else {

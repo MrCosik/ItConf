@@ -13,6 +13,7 @@ public class LectureDto {
         this.topicNumber = topicNumber;
         this.appUserId = appUserId;
 
+        //lecture numbers are changed to strings of time for easier read
         switch (lectureNumber.intValue()){
             case 1:
                 startHour = "10:00";

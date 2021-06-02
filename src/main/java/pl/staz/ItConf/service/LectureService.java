@@ -25,6 +25,7 @@ public class LectureService {
         this.userRepository = userRepository;
     }
 
+    //plan of all the lectures, we have 3 topics, lecture with number 1 start at 10, number 2 at 12 and number 3 at 14
     List<LectureDao> topic1 = Arrays.asList(
             new LectureDao(1L, 1L, 0),
             new LectureDao(2L, 1L, 0),
@@ -56,6 +57,8 @@ public class LectureService {
                 throw new UserAlreadyAttendsThisLecture("User already attends this lecture");
 
         }
+
+        //we check what topic user wants to attend and then get specific lecture, create Lecture object that can be send to DB
         switch (topicNumber.intValue()) {
             case 1:
 
@@ -69,6 +72,7 @@ public class LectureService {
                 lecture1.setNumberOfAttendees(lectureToAdd.getNumberOfAttendees());
                 sendEmailConfirmation(lectureToAdd.toString(loggedUser.getUsername(), loggedUser.getEmail()));
                 loggedUser.addLecture(lectureToAdd);
+                System.out.println("You have singed up for a lecture");
                 userRepository.save(loggedUser);
                 break;
             case 2:
@@ -82,6 +86,7 @@ public class LectureService {
                 sendEmailConfirmation(lectureToAdd.toString(loggedUser.getUsername(), loggedUser.getEmail()));
                 lecture2.setNumberOfAttendees(lectureToAdd.getNumberOfAttendees());
                 loggedUser.addLecture(lectureToAdd);
+                System.out.println("You have singed up for a lecture");
                 userRepository.save(loggedUser);
                 break;
             case 3:
@@ -95,6 +100,7 @@ public class LectureService {
                 sendEmailConfirmation(lectureToAdd.toString(loggedUser.getUsername(), loggedUser.getEmail()));
                 lecture3.setNumberOfAttendees(lectureToAdd.getNumberOfAttendees());
                 loggedUser.addLecture(lectureToAdd);
+                System.out.println("You have singed up for a lecture");
                 userRepository.save(loggedUser);
                 break;
 
@@ -126,9 +132,11 @@ public class LectureService {
         return returnList;
     }
 
+
     private void sendEmailConfirmation(String lecture) {
 
         try {
+            //create file to save email to
             FileWriter output
                     = new FileWriter("emails.txt", true);
             output.write(lecture);
@@ -139,12 +147,17 @@ public class LectureService {
     }
 
     public void cancelLecture(Long lectureNumber) {
+        //we get logged user
         User loggedUser = userRepository.findUserByUsername(userSession.getUsername());
+
+        //check if user attends lecture that we specify in URL and save it to list
         List<Lecture> lecturesToRemove = loggedUser.getAttendedLectures()
                 .stream()
                 .filter(lecture -> lecture.getLectureNumber().equals(lectureNumber))
                 .collect(Collectors.toList());
 
+        //if user attends lecture, it will be saved to list, because system prevents attending
+        //more than one lecture at the same time, the list can be either empty or have one element
         if (lecturesToRemove.size() == 0)
             throw new UserDoesntAttendAnyLecture("You don't attend any lecture");
 

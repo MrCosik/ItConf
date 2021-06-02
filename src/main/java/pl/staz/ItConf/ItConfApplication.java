@@ -1,7 +1,9 @@
 package pl.staz.ItConf;
 
+import org.jboss.jandex.Main;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 
 @SpringBootApplication
 public class ItConfApplication {

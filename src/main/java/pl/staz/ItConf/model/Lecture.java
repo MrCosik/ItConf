@@ -74,12 +74,12 @@ public class Lecture {
 
     public String toString(String username, String email) {
         DateTimeFormatter dtf1 = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
-//        LocalDateTime localDateTime = LocalDateTime.now();
         ZonedDateTime zonedDateTime = ZonedDateTime.now();
 
         String startHour = "00:00";
         String endHour = "1:45";
 
+    //lecture numbers are changed to strings of time for easier to read
         switch (lectureNumber.intValue()) {
             case 1:
                 startHour = "10:00";

@@ -30,6 +30,7 @@ public class UserDto {
         return email;
     }
 
+    //here we change User object that we get from DB to DTO that can be send to frontend
     public static  UserDto from(User user){
         UserDto userDto = new UserDto();
         userDto.username = user.getUsername();

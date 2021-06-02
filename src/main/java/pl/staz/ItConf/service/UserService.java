@@ -22,11 +22,13 @@ public class UserService {
         this.userSession = userSession;
     }
 
+
     public User saveUser(UserDto userDto) {
         User savedUser = new User();
         savedUser.setUsername(userDto.getUsername());
         savedUser.setEmail(userDto.getEmail());
         userRepository.save(savedUser);
+        System.out.println("User has been registered");
         return savedUser;
     }
 
@@ -45,12 +47,8 @@ public class UserService {
 
     public UserDto changeEmail(UserEmailDto userEmailDto) {
         User loggedUser = userRepository.findUserByUsername(userSession.getUsername());
-
-
         loggedUser.setEmail(userEmailDto.getEmail());
         userRepository.save(loggedUser);
-
-
         return new UserDto(loggedUser.getUsername(), loggedUser.getEmail());
     }
 }

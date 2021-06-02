@@ -14,6 +14,7 @@ public class LectureDao {
         this.lectureNumber = lectureNumber;
         this.numberOfAttendees = numberOfAttendees;
 
+        //lecture numbers are changed to strings of time for easier read
         switch (lectureNumber.intValue()) {
             case 1:
                 startHour = "10:00";
@@ -29,13 +30,6 @@ public class LectureDao {
                 break;
 
         }
-    }
-
-    public LectureDao(Long lectureId, Long topicNumber, Long appUserId, int numberOfAttendees) {
-        this.lectureNumber = lectureId;
-        this.topicNumber = topicNumber;
-        this.appUserId = appUserId;
-        this.numberOfAttendees = numberOfAttendees;
     }
 
     public Long getLectureNumber() {
